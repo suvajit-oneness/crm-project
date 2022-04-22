@@ -19,7 +19,8 @@ use App\Repositories\LeadRepository;
 
 use App\Contracts\LeadFeedbackContract;
 use App\Repositories\LeadFeedbackRepository;
-
+use App\Contracts\CertificateContract;
+use App\Repositories\CertificateRepository;
 
 class RepositoryServiceProvider extends ServiceProvider
 {
@@ -32,6 +33,7 @@ class RepositoryServiceProvider extends ServiceProvider
         LeadContract::class         =>        LeadRepository::class,
         LeadUserContract::class         =>     LeadUserRepository::class,
         LeadFeedbackContract::class         => LeadFeedbackRepository::class,
+        CertificateContract::class         => CertificateRepository::class,
 
     ];
 

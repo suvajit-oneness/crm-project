@@ -126,6 +126,23 @@ Route::group(['prefix' => 'admin'], function () {
         Route::post('/csv-store', 'Admin\LeadUserManagementController@csvStore')->name('admin.leaduser.data.csv.store');
         Route::get('/export', 'Admin\LeadUserManagementController@export')->name('admin.leaduser.data.csv.export');
     });
+
+        //**  Certificate management   **/
+		Route::group(['prefix'  =>   'certificate'], function() {
+
+
+
+            Route::get('/', 'Admin\CertificateManagementController@index')->name('admin.certificate.index');
+            Route::get('/create', 'Admin\CertificateManagementController@create')->name('admin.certificate.create');
+            Route::post('/store', 'Admin\CertificateManagementController@store')->name('admin.certificate.store');
+            Route::get('/{id}/edit', 'Admin\CertificateManagementController@edit')->name('admin.certificate.edit');
+            Route::post('/update', 'Admin\CertificateManagementController@update')->name('admin.certificate.update');
+            Route::get('/{id}/delete', 'Admin\CertificateManagementController@delete')->name('admin.certificate.delete');
+            Route::post('updateStatus', 'Admin\CertificateManagementController@updateStatus')->name('admin.certificate.updateStatus');
+            Route::get('/{id}/details', 'Admin\CertificateManagementController@details')->name('admin.certificate.details');
+            Route::post('/csv-store', 'Admin\CertificateManagementController@csvStore')->name('admin.certificate.data.csv.store');
+            Route::get('/export', 'Admin\CertificateManagementController@export')->name('admin.certificate.data.csv.export');
+        });
     //     //**  Sub category management  **/
 	// 	Route::group(['prefix'  =>   'subcategory'], function() {
 

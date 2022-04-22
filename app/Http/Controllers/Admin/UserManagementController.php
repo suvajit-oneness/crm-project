@@ -54,7 +54,6 @@ class UserManagementController extends BaseController
         $this->validate($request, [
             'name'      =>  'required|string',
             'email'      =>  'required|string',
-
             'address'      =>  'required|string',
             'state'      =>  'required|string',
             'city'      =>  'required|string',
@@ -62,19 +61,16 @@ class UserManagementController extends BaseController
             'pin'      =>  'required|string',
             'dob'      =>  'required|string',
             'mobile'      =>  'required|string',
-
             'image'     =>  'required|mimes:jpg,jpeg,png|max:1000',
-
         ]);
 
-
         $params = $request->except('_token');
+        $user = $this->UserRepository->createUsers($params);
 
-        $state = $this->UserRepository->createUsers($params);
-
-        if (!$state) {
+        if (!$user) {
             return $this->responseRedirectBack('Error occurred while creating User.', 'error', true, true);
         }
+        createNotification((int) $user->id, (string) 'new_user');
         return $this->responseRedirect('admin.user.index', 'User has been created successfully' ,'success',false, false);
     }
 

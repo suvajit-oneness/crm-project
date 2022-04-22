@@ -4,11 +4,11 @@ namespace App\Http\Controllers\Admin;
 
 use App\Http\Controllers\Controller;
 use Illuminate\Http\Request;
-use App\Models\Lead;
+use App\Models\Certificate;
 use App\Models\User;
 use App\Models\Project;
 
-use App\Contracts\LeadContract;
+use App\Contracts\CertificateContract;
 use App\Http\Controllers\BaseController;
 use Illuminate\Support\Str;
 use Illuminate\Http\Response;
@@ -17,18 +17,18 @@ use Session;
 use Maatwebsite\Excel\Facades\Excel;
 use App\Exports\BlogExport;
 
-class LeadManagementController extends BaseController
+class CertificateManagementController extends BaseController
 {
-    protected $LeadRepository;
+    protected $CertificateRepository;
 
     /**
-     * BlogController constructor.
-     * @param BlogRepository $LeadRepository
+     * CertificateManagementController constructor.
+     * @param BlogRepository $CertificateRepository
      */
 
-    public function __construct(LeadContract $LeadRepository)
+    public function __construct(CertificateContract $CertificateRepository)
     {
-        $this->LeadRepository = $LeadRepository;
+        $this->CertificateRepository = $CertificateRepository;
     }
 
     /**
@@ -36,10 +36,10 @@ class LeadManagementController extends BaseController
      */
     public function index()
     {
-        $lead = $this->LeadRepository->listLead();
+        $cer = $this->CertificateRepository->listCertificate();
 
-        $this->setPageTitle('Lead', 'List of all Lead');
-        return view('admin.lead.index', compact('lead'));
+        $this->setPageTitle('Certificate', 'List of all Certificate');
+        return view('admin.certificate.index', compact('cer'));
     }
 
     /**
@@ -47,10 +47,9 @@ class LeadManagementController extends BaseController
      */
     public function create()
     {
-        $this->setPageTitle('Blog', 'Create Blog');
-        $lead = $this->LeadRepository->getproject();
-        $leaduser = $this->LeadRepository->getuser();
-        return view('admin.lead.create',compact('lead','leaduser'));
+        $this->setPageTitle('Certificate', 'Create Certificate');
+
+        return view('admin.certificate.create');
     }
 
     /**
@@ -62,29 +61,25 @@ class LeadManagementController extends BaseController
     {
         $request->validate([
            // 'project_id' => 'required|integer|min:1',
-            'customer_name' => 'required|string|min:1',
-            'customer_email' => 'required|string|min:1',
-            'customer_mobile' => 'required|string|min:1',
-            'customer_phone' => 'required|string',
-            'customer_company' => 'required|string',
-            'company_website' => 'required|string',
-            'customer_address' => 'required|string',
-            'customer_country' => 'required|string',
-            'customer_state' => 'required|string',
-            'customer_pin' => 'required|string',
-            'customer_city' => 'required|string',
-            'message' => 'required|string',
-            'subject' => 'required|string',
-            'assigned_to' => 'required|string',
+            'name_prefix' => 'required|string|min:1',
+            'first_name' => 'required|string|min:1',
+            'last_name' => 'required|string|min:1',
+            'email' => 'required|string',
+            'phone' => 'required|string',
+            'start_date' => 'required|string',
+            'end_date' => 'required|string',
+            'title' => 'required|string',
+            'grade' => 'required|string',
+
 
         ]);
 
-        $lead = $this->LeadRepository->createLead($request->except('_token'));
+        $cer = $this->CertificateRepository->createCertificate($request->except('_token'));
 
-        if (!$lead) {
-            return $this->responseRedirectBack('Error occurred while creating Lead.', 'error', true, true);
+        if (!$cer) {
+            return $this->responseRedirectBack('Error occurred while creating Certificate.', 'error', true, true);
         }
-        return $this->responseRedirect('admin.lead.index', 'Lead has been created successfully' ,'success',false, false);
+        return $this->responseRedirect('admin.certificate.index', 'Certificate has been created successfully' ,'success',false, false);
     }
 
     /**
@@ -93,11 +88,10 @@ class LeadManagementController extends BaseController
      */
     public function edit($id)
     {
-        $targetlead = $this->LeadRepository->findLeadById($id);
-        $lead = $this->LeadRepository->getproject();
-        $leadcat = $this->LeadRepository->getuser();
-        $this->setPageTitle('Lead', 'Edit Lead : '.$targetlead->customer_name);
-        return view('admin.lead.edit', compact('targetlead','lead','leadcat'));
+        $cer = $this->CertificateRepository->findCertificateById($id);
+
+        $this->setPageTitle('Certificate', 'Edit Certificate : '.$cer->title);
+        return view('admin.certificate.edit', compact('cer'));
     }
 
     /**
@@ -109,32 +103,27 @@ class LeadManagementController extends BaseController
     {
         $request->validate([
             //'project_id' => 'required|integer|min:1',
-            'customer_name' => 'required|string|min:1',
-            'customer_email' => 'required|string|min:1',
-            'customer_mobile' => 'required|string|min:1',
-            'customer_phone' => 'required|string',
-            'customer_company' => 'required|string',
-            'company_website' => 'required|string',
-            'customer_address' => 'required|string',
-            'customer_country' => 'required|string',
-            'customer_state' => 'required|string',
-            'customer_pin' => 'required|string',
-            'customer_city' => 'required|string',
-            'message' => 'required|string',
-            'subject' => 'required|string',
-            'assigned_to' => 'required|string',
+            'name_prefix' => 'required|string|min:1',
+            'first_name' => 'required|string|min:1',
+            'last_name' => 'required|string|min:1',
+            'email' => 'required|string',
+            'phone' => 'required|string',
+            'start_date' => 'required|string',
+            'end_date' => 'required|string',
+            'title' => 'required|string',
+            'grade' => 'required|string',
         ]);
         // $slug = Str::slug($request->name, '-');
         // $slugExistCount = Blog::where('slug', $slug)->count();
         // if ($slugExistCount > 0) $slug = $slug.'-'.($slugExistCount+1);
         $params = $request->except('_token');
 
-        $targetlead = $this->LeadRepository->updateLead($params);
+        $targetcer = $this->CertificateRepository->updateCertificate($params);
 
-        if (!$targetlead) {
-            return $this->responseRedirectBack('Error occurred while updating Lead.', 'error', true, true);
+        if (!$targetcer) {
+            return $this->responseRedirectBack('Error occurred while updating Certificate.', 'error', true, true);
         }
-        return $this->responseRedirectBack('Lead has been updated successfully' ,'success',false, false);
+        return $this->responseRedirectBack('Certificate has been updated successfully' ,'success',false, false);
     }
 
     /**
@@ -143,12 +132,12 @@ class LeadManagementController extends BaseController
      */
     public function delete($id)
     {
-        $targetlead = $this->LeadRepository->deleteLead($id);
+        $targetcer = $this->CertificateRepository->deleteCertificate($id);
 
-        if (!$targetlead) {
-            return $this->responseRedirectBack('Error occurred while deleting Lead.', 'error', true, true);
+        if (!$targetcer) {
+            return $this->responseRedirectBack('Error occurred while deleting Certificate.', 'error', true, true);
         }
-        return $this->responseRedirect('admin.lead.index', 'Lead has been deleted successfully' ,'success',false, false);
+        return $this->responseRedirect('admin.certificate.index', 'Certificate has been deleted successfully' ,'success',false, false);
     }
 
     /**
@@ -160,10 +149,10 @@ class LeadManagementController extends BaseController
 
         $params = $request->except('_token');
 
-        $targetlead = $this->LeadRepository->updateLeadStatus($params);
+        $targetcer = $this->CertificateRepository->updateCertificateStatus($params);
 
-        if ($targetlead) {
-            return response()->json(array('message'=>'Lead status has been successfully updated'));
+        if ($targetcer) {
+            return response()->json(array('message'=>'Certificate status has been successfully updated'));
         }
     }
 
@@ -173,11 +162,11 @@ class LeadManagementController extends BaseController
      */
     public function details($id)
     {
-        $targetlead = $this->LeadRepository->detailsLead($id);
-        $lead = $targetlead[0];
+        $targetcer = $this->CertificateRepository->detailsCertificate($id);
+        $cer = $targetcer[0];
 
-        $this->setPageTitle('Lead', 'Lead Details : '.$lead->subject);
-        return view('admin.lead.details', compact('lead'));
+        $this->setPageTitle('Certificate', 'Certificate Details : '.$cer->subject);
+        return view('admin.certificate.details', compact('cer'));
     }
 
 

@@ -1,4 +1,4 @@
-<?php 
+<?php
 if (!function_exists('sidebar_open')) {
     function sidebar_open($routes = []) {
         $currRoute = Route::currentRouteName();
@@ -25,7 +25,7 @@ if (!function_exists('imageResizeAndSave')) {
     function imageResizeAndSave($imageUrl, $type = 'categories', $filename)
     {
         if (!empty($imageUrl)) {
-                                                    
+
             //save 60x60 image
             \Storage::disk('public')->makeDirectory($type.'/60x60');
             $path60X60     = storage_path('app/public/'.$type.'/60x60/'.$filename);
@@ -35,12 +35,12 @@ if (!function_exists('imageResizeAndSave')) {
                         $constraint->aspectRatio();
                     });
             $canvas->insert($image, 'center');
-            $canvas->save($path60X60, 70); 
-            
+            $canvas->save($path60X60, 70);
+
             //save 350X350 image
             \Storage::disk('public')->makeDirectory($type.'/350x350');
             $path350X350     = storage_path('app/public/'.$type.'/350x350/'.$filename);
-            $canvas = \Image::canvas(350, 350);        
+            $canvas = \Image::canvas(350, 350);
             $image = \Image::make($imageUrl)->resize(350, 350,
                     function($constraint) {
                         $constraint->aspectRatio();
@@ -51,4 +51,19 @@ if (!function_exists('imageResizeAndSave')) {
             return $filename;
         } else { return false; }
     }
+}
+
+function createNotification(int $receiver_id, string $type) {
+    switch($type) {
+        case 'new_user': $title = 'New user created';$message = 'New user created';$route = 'admin.user.index';break;
+        default: $title = 'New notification';$message = 'New notification message';$route = '';break;
+    }
+
+    $notification = new App\Models\Notification();
+    $notification->sender_id = Auth()->user()->id;
+    $notification->receiver_id = $receiver_id;
+    $notification->title = $title;
+    $notification->message = $message;
+    $notification->route = $route;
+    $notification->save();
 }
