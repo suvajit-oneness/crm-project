@@ -1,18 +1,18 @@
-/node_modules
+# /node_modules
 /public/hot
-/public/storage
-/storage/*.key
+# /public/storage
+# /storage/*.key
 /vendor
-/public/robots.txt
+# /public/robots.txt
 .env
 .phpunit.result.cache
 Homestead.json
 Homestead.yaml
 npm-debug.log
 yarn-error.log
-/public/backend
-/public/frontend
-/public/uploads
-/public/mix-manifest.json
-package.json
-composer.lock
+# /public/backend
+# /public/frontend
+# /public/uploads
+# /public/mix-manifest.json
+# package.json
+# composer.lock
