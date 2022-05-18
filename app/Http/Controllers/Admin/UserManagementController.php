@@ -61,7 +61,7 @@ class UserManagementController extends BaseController
             'pin'      =>  'required|string',
             'dob'      =>  'required|string',
             'mobile'      =>  'required|string',
-            'image'     =>  'required|mimes:jpg,jpeg,png|max:1000',
+            'image'     =>  'required|mimes:jpg,jpeg,png|max:10000',
         ]);
 
         $params = $request->except('_token');

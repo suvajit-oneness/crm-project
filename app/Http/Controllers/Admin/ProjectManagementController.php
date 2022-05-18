@@ -63,7 +63,7 @@ class ProjectManagementController extends BaseController
             'deadline'      =>  'required|string|min:0',
             'description'      =>  'required|string|min:0',
             'progress'      =>  'required|string|min:0',
-            'files'      =>  'required|mimes:jpg,jpeg,png,pdf,doc,csv,excel|max:1000',
+            'files'      =>  'required|mimes:jpg,jpeg,png,pdf,doc,csv,excel|max:10000',
         ]);
         $slug = Str::slug($request->title, '-');
         $slugExistCount = Project::where('slug', $slug)->count();
@@ -111,7 +111,7 @@ class ProjectManagementController extends BaseController
             'deadline'      =>  'required|string|min:0',
             'description'      =>  'required|string|min:0',
             'progress'      =>  'required|string|min:0',
-            'files'      =>  'nullable|mimes:jpg,jpeg,png|max:100000',
+            'files'      =>  'nullable|mimes:jpg,jpeg,png|max:10000',
 
         ]);
         $slug = Str::slug($request->title, '-');
