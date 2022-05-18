@@ -54,10 +54,9 @@ class ProjectManagementController extends BaseController
      */
     public function store(Request $request)
     {
-    //    dd($request->all());
+        //    dd($request->all());
         $this->validate($request, [
             'title'      =>  'required|string|min:0',
-             'slug'   =>  'required|string|min:0',
             'price'      =>  'required|string|min:0',
             'start_date'      =>  'required|string|min:0',
             'end_date'      =>  'required|string|min:0',
@@ -68,7 +67,7 @@ class ProjectManagementController extends BaseController
         ]);
         $slug = Str::slug($request->title, '-');
         $slugExistCount = Project::where('slug', $slug)->count();
-        if ($slugExistCount > 0) $slug = $slug.'-'.($slugExistCount+1);
+        if ($slugExistCount > 0) $slug = $slug . '-' . ($slugExistCount + 1);
 
         // send slug
         request()->merge(['slug' => $slug]);
@@ -80,7 +79,7 @@ class ProjectManagementController extends BaseController
         if (!$project) {
             return $this->responseRedirectBack('Error occurred while creating Project.', 'error', true, true);
         }
-        return $this->responseRedirect('admin.project.index', 'Project has been created successfully' ,'success',false, false);
+        return $this->responseRedirect('admin.project.index', 'Project has been created successfully', 'success', false, false);
     }
 
     /**
@@ -91,7 +90,7 @@ class ProjectManagementController extends BaseController
     {
         $targetproject = $this->ProjectRepository->findProjectById($id);
 
-        $this->setPageTitle('Project', 'Edit project : '.$targetproject->title);
+        $this->setPageTitle('Project', 'Edit project : ' . $targetproject->title);
         return view('admin.project.edit', compact('targetproject'));
     }
 
@@ -102,7 +101,7 @@ class ProjectManagementController extends BaseController
      */
     public function update(Request $request)
     {
-       // dd($request->all());
+        // dd($request->all());
         $this->validate($request, [
             'title'      =>  'required|string|min:0',
             'slug'   =>  'required|string|min:0',
@@ -112,20 +111,21 @@ class ProjectManagementController extends BaseController
             'deadline'      =>  'required|string|min:0',
             'description'      =>  'required|string|min:0',
             'progress'      =>  'required|string|min:0',
-            'files'      =>  'required|mimes:jpg,jpeg,png|max:1000',
+            'files'      =>  'nullable|mimes:jpg,jpeg,png|max:100000',
 
         ]);
         $slug = Str::slug($request->title, '-');
         $slugExistCount = Project::where('slug', $slug)->count();
-        if ($slugExistCount > 0) $slug = $slug.'-'.($slugExistCount+1);
+        if ($slugExistCount > 0) $slug = $slug . '-' . ($slugExistCount + 1);
         $params = $request->except('_token');
+        // return $params;
 
         $targetproject = $this->ProjectRepository->updateProject($params);
 
         if (!$targetproject) {
             return $this->responseRedirectBack('Error occurred while updating Project.', 'error', true, true);
         }
-        return $this->responseRedirectBack('Project has been updated successfully' ,'success',false, false);
+        return $this->responseRedirectBack('Project has been updated successfully', 'success', false, false);
     }
 
     /**
@@ -139,7 +139,7 @@ class ProjectManagementController extends BaseController
         if (!$targetproject) {
             return $this->responseRedirectBack('Error occurred while deleting Project.', 'error', true, true);
         }
-        return $this->responseRedirect('admin.project.index', 'Project has been deleted successfully' ,'success',false, false);
+        return $this->responseRedirect('admin.project.index', 'Project has been deleted successfully', 'success', false, false);
     }
 
     /**
@@ -147,14 +147,15 @@ class ProjectManagementController extends BaseController
      * @return \Illuminate\Http\RedirectResponse
      * @throws \Illuminate\Validation\ValidationException
      */
-    public function updateStatus(Request $request){
+    public function updateStatus(Request $request)
+    {
 
         $params = $request->except('_token');
 
         $targetproject = $this->ProjectRepository->updateProjectStatus($params);
 
         if ($targetproject) {
-            return response()->json(array('message'=>'Project status has been successfully updated'));
+            return response()->json(array('message' => 'Project status has been successfully updated'));
         }
     }
 
@@ -167,7 +168,7 @@ class ProjectManagementController extends BaseController
         $targetproject = $this->ProjectRepository->detailsProject($id);
         $project = $targetproject[0];
 
-        $this->setPageTitle('Project', 'Project Details : '.$project->title);
+        $this->setPageTitle('Project', 'Project Details : ' . $project->title);
         return view('admin.project.details', compact('project'));
     }
 
@@ -221,7 +222,7 @@ class ProjectManagementController extends BaseController
                     // Insert into database
                     foreach ($importData_arr as $importData) {
                         $storeData = 0;
-                        if(isset($importData[5]) == "Carry In") $storeData = 1;
+                        if (isset($importData[5]) == "Carry In") $storeData = 1;
 
                         $insertData = array(
                             "name" => isset($importData[0]) ? $importData[0] : null,

@@ -11,8 +11,8 @@ $feedback = App\Models\LeadFeedback::where('status','1')->get();
 
 <style type="text/css">
     .row-md-body.no-nav {
-    margin-top: 70px;
-}
+        margin-top: 70px;
+    }
 </style>
 
 <div class="fixed-row">
@@ -71,7 +71,7 @@ $feedback = App\Models\LeadFeedback::where('status','1')->get();
     <div class="col-md-12">
         <div class="card">
             <div class="panel-heading">
-               Lead Details
+                Lead Details
             </div>
             <div class="card-body">
                 <ul class="nav nav-tabs w-100">
@@ -83,40 +83,42 @@ $feedback = App\Models\LeadFeedback::where('status','1')->get();
                 <div class="tab-content">
                     <div class="tab-pane active" id="firsttab">
                         <div class="card-body">
-                        <div class="tile-body table-responsive">
-                            <table class="table table-hover custom-data-table-style">
-                                <thead>
-                                    <tr>
-                                        <th> Project</th>
-                                        <th>  Name</th>
-                                        <th> Contact</th>
-                                        <th> Assigned to</th>
-                                        <th>  Action</th>
-                                    </tr>
-                                </thead>
-                                <tbody>
-                                    @forelse($newleads as $leads)
+                            <div class="tile-body table-responsive">
+                                <table class="table table-hover custom-data-table-style">
+                                    <thead>
+                                        <tr>
+                                            <th> Project</th>
+                                            <th> Name</th>
+                                            <th> Contact</th>
+                                            <th> Assigned to</th>
+                                            <th> Action</th>
+                                        </tr>
+                                    </thead>
+                                    <tbody>
+                                        @forelse($newleads as $leads)
                                         <tr>
                                             <td>{{ ($leads->project) ? $leads->project->title : ''}}</td>
                                             <td>{{ $leads->customer_name}}</td>
                                             <td>
                                                 {{ $leads->customer_email}}
 
-                                               {{ $leads->customer_mobile}}
+                                                {{ $leads->customer_mobile}}
                                             </td>
                                             <td>{{$leads->user? $leads->user->name : ''}}</td>
                                             <td class="align-center">
-                                            <a href="{{ route('admin.lead.details', $leads['id']) }}" class="btn btn-sm btn-primary edit-btn"><i class="fa fa-eye"></i></a>
+                                                <a href="{{ route('admin.lead.details', $leads['id']) }}" class="btn btn-sm btn-primary edit-btn"><i class="fa fa-eye"></i></a>
                                             </td>
                                         </tr>
                                         @empty
-                                        <tr><td colspan="100%" class="text-center text-muted">No Data found</td></tr>
-                                    @endforelse
-                                </tbody>
-                            </table>
+                                        <tr>
+                                            <td colspan="100%" class="text-center text-muted">No Data found</td>
+                                        </tr>
+                                        @endforelse
+                                    </tbody>
+                                </table>
+                            </div>
                         </div>
                     </div>
-                </div>
                     <div class="tab-pane" id="secondtab">
                         <div class="card-body">
                             <div class="tile-body table-responsive">
@@ -124,29 +126,31 @@ $feedback = App\Models\LeadFeedback::where('status','1')->get();
                                     <thead>
                                         <tr>
                                             <th> Project</th>
-                                            <th>  Name</th>
+                                            <th> Name</th>
                                             <th> Contact</th>
                                             <th> Assigned to</th>
-                                            <th>  Action</th>
+                                            <th> Action</th>
                                         </tr>
                                     </thead>
                                     <tbody>
                                         @forelse($ongoingleads as $leads)
-                                            <tr>
-                                                <td>{{ ($leads->project) ? $leads->project->title : ''}}</td>
-                                                <td>{{ $leads->customer_name}}</td>
-                                                <td>
-                                                    {{ $leads->customer_email}}
+                                        <tr>
+                                            <td>{{ ($leads->project) ? $leads->project->title : ''}}</td>
+                                            <td>{{ $leads->customer_name}}</td>
+                                            <td>
+                                                {{ $leads->customer_email}}
 
-                                                   {{ $leads->customer_mobile}}
-                                                </td>
-                                                <td>{{$leads->user? $leads->user->name : ''}}</td>
-                                                <td class="align-center">
+                                                {{ $leads->customer_mobile}}
+                                            </td>
+                                            <td>{{$leads->user? $leads->user->name : ''}}</td>
+                                            <td class="align-center">
                                                 <a href="{{ route('admin.lead.details', $leads['id']) }}" class="btn btn-sm btn-primary edit-btn"><i class="fa fa-eye"></i></a>
-                                                </td>
-                                            </tr>
-                                            @empty
-                                            <tr><td colspan="100%" class="text-center text-muted">No Data found</td></tr>
+                                            </td>
+                                        </tr>
+                                        @empty
+                                        <tr>
+                                            <td colspan="100%" class="text-center text-muted">No Data found</td>
+                                        </tr>
                                         @endforelse
                                     </tbody>
                                 </table>
@@ -160,29 +164,31 @@ $feedback = App\Models\LeadFeedback::where('status','1')->get();
                                     <thead>
                                         <tr>
                                             <th> Project</th>
-                                            <th>  Name</th>
+                                            <th> Name</th>
                                             <th> Contact</th>
                                             <th> Assigned to</th>
-                                            <th>  Action</th>
+                                            <th> Action</th>
                                         </tr>
                                     </thead>
                                     <tbody>
                                         @forelse($completeleads as $leads)
-                                            <tr>
-                                                <td>{{ ($leads->project) ? $leads->project->title : ''}}</td>
-                                                <td>{{ $leads->customer_name}}</td>
-                                                <td>
-                                                    {{ $leads->customer_email}}
+                                        <tr>
+                                            <td>{{ ($leads->project) ? $leads->project->title : ''}}</td>
+                                            <td>{{ $leads->customer_name}}</td>
+                                            <td>
+                                                {{ $leads->customer_email}}
 
-                                                   {{ $leads->customer_mobile}}
-                                                </td>
-                                                <td>{{$leads->user? $leads->user->name : ''}}</td>
-                                                <td class="align-center">
+                                                {{ $leads->customer_mobile}}
+                                            </td>
+                                            <td>{{$leads->user? $leads->user->name : ''}}</td>
+                                            <td class="align-center">
                                                 <a href="{{ route('admin.lead.details', $leads['id']) }}" class="btn btn-sm btn-primary edit-btn"><i class="fa fa-eye"></i></a>
-                                                </td>
-                                            </tr>
-                                            @empty
-                                            <tr><td colspan="100%" class="text-center text-muted">No Data found</td></tr>
+                                            </td>
+                                        </tr>
+                                        @empty
+                                        <tr>
+                                            <td colspan="100%" class="text-center text-muted">No Data found</td>
+                                        </tr>
                                         @endforelse
                                     </tbody>
                                 </table>
@@ -199,39 +205,41 @@ $feedback = App\Models\LeadFeedback::where('status','1')->get();
                                     <thead>
                                         <tr>
                                             <th> Project</th>
-                                            <th>  Name</th>
+                                            <th> Name</th>
                                             <th> Contact</th>
                                             <th> Assigned to</th>
-                                            <th>  Action</th>
+                                            <th> Action</th>
                                         </tr>
                                     </thead>
                                     <tbody>
                                         @forelse($cancelleads as $leads)
-                                            <tr>
-                                                <td>{{ ($leads->project) ? $leads->project->title : ''}}</td>
-                                                <td>{{ $leads->customer_name}}</td>
-                                                <td>
-                                                    {{ $leads->customer_email}}
+                                        <tr>
+                                            <td>{{ ($leads->project) ? $leads->project->title : ''}}</td>
+                                            <td>{{ $leads->customer_name}}</td>
+                                            <td>
+                                                {{ $leads->customer_email}}
 
-                                                   {{ $leads->customer_mobile}}
-                                                </td>
-                                                <td>{{$leads->user? $leads->user->name : ''}}</td>
-                                                <td class="align-center">
+                                                {{ $leads->customer_mobile}}
+                                            </td>
+                                            <td>{{$leads->user? $leads->user->name : ''}}</td>
+                                            <td class="align-center">
                                                 <a href="{{ route('admin.lead.details', $leads['id']) }}" class="btn btn-sm btn-primary edit-btn"><i class="fa fa-eye"></i></a>
-                                                </td>
-                                            </tr>
-                                            @empty
-                                            <tr><td colspan="100%" class="text-center text-muted">No Data found</td></tr>
+                                            </td>
+                                        </tr>
+                                        @empty
+                                        <tr>
+                                            <td colspan="100%" class="text-center text-muted">No Data found</td>
+                                        </tr>
                                         @endforelse
                                     </tbody>
                                 </table>
                             </div>
                         </div>
+                    </div>
                 </div>
             </div>
         </div>
     </div>
-</div>
 </div>
 
 <div class="row mt-5">
@@ -246,29 +254,31 @@ $feedback = App\Models\LeadFeedback::where('status','1')->get();
                         <thead>
                             <tr>
                                 <th> Project</th>
-                                <th>  Name</th>
+                                <th> Name</th>
                                 <th> Contact</th>
                                 <th> Assigned to</th>
-                                <th>  Action</th>
+                                <th> Action</th>
                             </tr>
                         </thead>
                         <tbody>
                             @forelse($lead as $leads)
-                                <tr>
-                                    <td>{{ ($leads->project) ? $leads->project->title : ''}}</td>
-                                    <td>{{ $leads->customer_name}}</td>
-                                    <td>
-                                        {{ $leads->customer_email}}
+                            <tr>
+                                <td>{{ ($leads->project) ? $leads->project->title : ''}}</td>
+                                <td>{{ $leads->customer_name}}</td>
+                                <td>
+                                    {{ $leads->customer_email}}
 
-                                       {{ $leads->customer_mobile}}
-                                    </td>
-                                    <td>{{$leads->user? $leads->user->name : ''}}</td>
-                                    <td class="align-center">
+                                    {{ $leads->customer_mobile}}
+                                </td>
+                                <td>{{$leads->user? $leads->user->name : ''}}</td>
+                                <td class="align-center">
                                     <a href="{{ route('admin.lead.details', $leads['id']) }}" class="btn btn-sm btn-primary edit-btn"><i class="fa fa-eye"></i></a>
-                                    </td>
-                                </tr>
-                                @empty
-                                <tr><td colspan="100%" class="text-center text-muted">No Data found</td></tr>
+                                </td>
+                            </tr>
+                            @empty
+                            <tr>
+                                <td colspan="100%" class="text-center text-muted">No Data found</td>
+                            </tr>
                             @endforelse
                         </tbody>
                     </table>
@@ -288,14 +298,15 @@ $feedback = App\Models\LeadFeedback::where('status','1')->get();
                     <div class="media">
                         <div class="m_user">@if($leads->user->image!='')
                             <img style="width: 40;height: 40;" src="{{URL::to('/').'/User/'}}{{$leads->user->image}}">
-                            @endif</div>
+                            @endif
+                        </div>
                         <div class="m_text">
                             <h5>{{ $leads->user->name }} <span>{{ $leads->created_at }}</span></h5>
                             <p>{{ $leads->comment }}</p>
-                            <p>Lead : <a href="{{ route('admin.lead.details', $leads['id']) }}">{{ $leads->lead->subject }}</a></p>
+                            <p>Lead : <a href="{{ route('admin.lead.details', $leads['lead_id']) }}">{{ $leads->lead->subject }}</a></p>
                         </div>
                     </div>
-                @endforeach
+                    @endforeach
                 </div>
             </div>
         </div>

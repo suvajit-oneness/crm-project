@@ -1,4 +1,5 @@
 <?php
+
 namespace App\Repositories;
 
 use App\Models\Project;
@@ -9,6 +10,7 @@ use Illuminate\Database\QueryException;
 use Illuminate\Database\Eloquent\ModelNotFoundException;
 use Doctrine\Instantiator\Exception\InvalidArgumentException;
 use Illuminate\Support\Str;
+
 /**
  * ClassProjectRepository
  *
@@ -48,7 +50,6 @@ class ProjectRepository extends BaseRepository implements ProjectContract
     {
         try {
             return $this->findOneOrFail($id);
-
         } catch (ModelNotFoundException $e) {
 
             throw new ModelNotFoundException($e);
@@ -61,7 +62,6 @@ class ProjectRepository extends BaseRepository implements ProjectContract
      */
     public function createProject(array $params)
     {
-
         try {
 
             $collection = collect($params);
@@ -78,18 +78,17 @@ class ProjectRepository extends BaseRepository implements ProjectContract
             $project->files = $collection['files'];
             $slug = Str::slug($collection['title'], '-');
             $slugExistCount = Project::where('slug', $slug)->count();
-            if ($slugExistCount > 0) $slug = $slug.'-'.($slugExistCount+1);
+            if ($slugExistCount > 0) $slug = $slug . '-' . ($slugExistCount + 1);
             $project->slug = $slug;
             $files = $collection['files'];
-            $fileName = time().".".$files->getClientOriginalName();
-            $files->move("File/",$fileName);
+            $fileName = time() . "." . $files->getClientOriginalName();
+            $files->move("File/", $fileName);
             $uploadedImage = $fileName;
             $project->files = $uploadedImage;
 
             $project->save();
 
             return $project;
-
         } catch (QueryException $exception) {
             throw new InvalidArgumentException($exception->getMessage());
         }
@@ -101,6 +100,9 @@ class ProjectRepository extends BaseRepository implements ProjectContract
      */
     public function updateProject(array $params)
     {
+        // // dd($params);
+        // echo array_key_exists("files", $params);
+        // die;
         $project = $this->findOneOrFail($params['id']);
         $collection = collect($params)->except('_token');
 
@@ -112,16 +114,19 @@ class ProjectRepository extends BaseRepository implements ProjectContract
         $project->deadline = $collection['deadline'];
         $project->description = $collection['description'];
         $project->progress = $collection['progress'];
-        $project->files = $collection['files'];
+        if (array_key_exists("files", $params))
+            $project->files = $collection['files'];
         $slug = Str::slug($collection['title'], '-');
         $slugExistCount = Project::where('slug', $slug)->count();
-        if ($slugExistCount > 0) $slug = $slug.'-'.($slugExistCount+1);
+        if ($slugExistCount > 0) $slug = $slug . '-' . ($slugExistCount + 1);
         $project->slug = $slug;
-        $files = $collection['files'];
-        $fileName = time().".".$files->getClientOriginalName();
-        $files->move("File/",$fileName);
-        $uploadedImage = $fileName;
-        $project->files = $uploadedImage;
+        if (array_key_exists("files", $params)) {
+            $files = $collection['files'];
+            $fileName = time() . "." . $files->getClientOriginalName();
+            $files->move("File/", $fileName);
+            $uploadedImage = $fileName;
+            $project->files = $uploadedImage;
+        }
         // $profile_image = $collection['image'];
         // $imageName = time().".".$profile_image->getClientOriginalName();
         // $profile_image->move("categories/",$imageName);
@@ -148,7 +153,8 @@ class ProjectRepository extends BaseRepository implements ProjectContract
      * @param array $params
      * @return mixed
      */
-    public function updateProjectStatus(array $params){
+    public function updateProjectStatus(array $params)
+    {
         $state = $this->findOneOrFail($params['id']);
         $collection = collect($params)->except('_token');
         $state->status = $collection['check_status'];
@@ -163,16 +169,13 @@ class ProjectRepository extends BaseRepository implements ProjectContract
      */
     public function detailsProject($id)
     {
-        $categories = Project::where('id',$id)->get();
+        $categories = Project::where('id', $id)->get();
 
         return $categories;
     }
 
 
 
-        // csv upload
+    // csv upload
 
-    }
-
-
-
+}
