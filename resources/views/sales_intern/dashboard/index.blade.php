@@ -1,4 +1,4 @@
-@extends('sales.app')
+@extends('master_layouts.app')
 @section('title') Dashboard @endsection
 @section('content')
 @php

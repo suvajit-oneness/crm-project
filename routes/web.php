@@ -20,7 +20,8 @@ Route::prefix('user')->name('user.')->group(function () {
         Route::get('logout', [App\Http\Controllers\Auth\LoginController::class, 'logout'])->name('logout');
         // Route::get('/home/dashboard', [App\Http\Controllers\HomeController::class, 'index'])->name('home');
         
-        Route::group(['prefix' => 'sales'], function () {
+        Route::prefix('sales')->name('sales.')->group(function () {
+            // Route::group(['prefix' => 'sales', 'name' => 'sales.'], function () {
             require 'sales.php';
         });
 

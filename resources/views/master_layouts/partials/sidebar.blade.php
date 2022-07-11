@@ -10,13 +10,13 @@
 
 
             <!---User Management-->
-            <li>
+            {{-- <li>
                 <a class="app-menu__item {{ request()->is('admin/users') ? 'active' : '' }} {{ sidebar_open(['admin.users']) }}"
                     href="{{ route('admin.users.index') }}">
                     <i class="app-menu__icon fa fa-user"></i>
                     <span class="app-menu__label">User Management</span>
                 </a>
-            </li>
+            </li> --}}
 
                 <!--  Project management -->
                 <li>
@@ -46,12 +46,19 @@
            <span class="app-menu__label">Lead Feedback Management</span>
            </a>
        </li>
+
+       <li>
+            <a class="app-menu__item {{ request()->is('sales/intern') ? 'active' : '' }} {{ sidebar_open(['sales.intern']) }}"
+            href="{{ route('user.sales.intern.index') }}"><i class="app-menu__icon fa fa-handshake-o"></i>
+            <span class="app-menu__label">Intern management</span>
+            </a>
+        </li>   
        <!---   Certificate Management ---->
-        <li>
+        {{-- <li>
             <a class="app-menu__item {{ request()->is('admin/certificate') ? 'active' : '' }} {{ sidebar_open(['admin.certificate']) }}"
              href="{{ route('admin.certificate.index') }}"><i class="app-menu__icon fa fa-file"></i>
            <span class="app-menu__label">Certificate Management</span>
            </a>
-       </li>
+       </li> --}}
     </ul>
 </aside>

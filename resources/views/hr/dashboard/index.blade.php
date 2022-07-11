@@ -88,10 +88,10 @@ $feedback = App\Models\LeadFeedback::where('status','1')->get();
                                 <thead>
                                     <tr>
                                         <th> Project</th>
-                                        <th>  Name</th>
+                                        <th> Name</th>
                                         <th> Contact</th>
                                         <th> Assigned to</th>
-                                        <th>  Action</th>
+                                        <th> Action</th>
                                     </tr>
                                 </thead>
                                 <tbody>

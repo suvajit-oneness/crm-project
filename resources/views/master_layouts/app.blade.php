@@ -12,8 +12,8 @@
     @stack('styles')
 </head>
 <body class="app sidebar-mini rtl">
-    @include('hr_intern.partials.header')
-    @include('hr_intern.partials.sidebar')
+    @include('master_layouts.partials.header')
+    @include('master_layouts.partials.sidebar')
     <main class="app-content" id="app">
         @yield('content')
     </main>
