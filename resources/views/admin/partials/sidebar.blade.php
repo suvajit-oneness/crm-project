@@ -53,5 +53,12 @@
            <span class="app-menu__label">Certificate Management</span>
            </a>
        </li>
+
+       <li>
+        <a class="app-menu__item {{ request()->is('sales/intern') ? 'active' : '' }} {{ sidebar_open(['sales.intern']) }}"
+        href="{{ route('permission.index') }}"><i class="app-menu__icon fa fa-handshake-o"></i>
+        <span class="app-menu__label">Permission management</span>
+        </a>
+    </li>
     </ul>
 </aside>

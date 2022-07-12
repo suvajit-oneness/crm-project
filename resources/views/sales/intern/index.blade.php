@@ -79,7 +79,7 @@
                                     </td>
                                 </tr>
                             </form>
-                            <form action="#">
+                            {{-- <form action="#">
                                 <tr>
                                     <td class="text-left">HR</td>
                                    
@@ -163,7 +163,7 @@
                                         </div>
                                     </td>
                                 </tr>
-                            </form>
+                            </form> --}}
                         </tbody>
                     </table>
                 </div>

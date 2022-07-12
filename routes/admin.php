@@ -35,6 +35,10 @@ Route::group(['prefix' => 'admin'], function () {
 		Route::post('/profile', 'Admin\ProfileController@update')->name('admin.profile.update');
 		Route::post('/changepassword', 'Admin\ProfileController@changePassword')->name('admin.profile.changepassword');
 
+
+        Route::get('/intern', [App\Http\Controllers\Admin\PermissionController::class, 'index'])->name('permission.index');
+        Route::post('/intern', [App\Http\Controllers\Admin\PermissionController::class, 'store'])->name('permission.store');
+        
         /**  user management      **/
         Route::group(['prefix'  =>   'users'], function() {
 			Route::get('/', 'Admin\UserManagementController@index')->name('admin.users.index');
